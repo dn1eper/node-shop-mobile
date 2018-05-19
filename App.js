@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { PersistGate } from 'redux-persist/integration/react'
 
-import App from './client/components/App';
+import Main from './client/components/Main';
 import createStore from './client/store/createStore'; // adding a redux
 
 import { fetchPosts } from './client/actions/postsActions';
@@ -20,7 +20,7 @@ export default class App extends React.Component {
       <Provider store={store}>
         <PersistGate loading={null} persistor={persistor}>
           <Router>
-            <Route path="/:place?/:subplace?" component={App} />
+            <Route path="/:place?/:subplace?" component={Main} />
           </Router>
         </PersistGate>
       </Provider>

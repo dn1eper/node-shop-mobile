@@ -1,0 +1,13 @@
+{
+    "NODE_ENV": "development",
+    "SHOP_DB": "elis_db",
+    "SHOP_USER": "root",
+    "SHOP_PASSWORD": "",
+    "database": {
+        "host": "127.0.0.1",
+        "port": 3306
+    },
+    "server": {
+        "port": 8080
+    }
+}

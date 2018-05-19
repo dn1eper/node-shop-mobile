@@ -1,0 +1,60 @@
+#!/usr/bin/perl
+use warnings;
+use strict;
+use DBI;
+use File::Slurp;
+
+use constant VERSIONS => '.versions';
+
+# Creating a version-controll file 
+# if does not exists
+unless ( -e VERSIONS ) {
+	open( my $file, '+>', VERSIONS)
+		or die $!;
+	print $file '0.0';
+	close $file;
+	print "File `".VERSIONS."` created.\n";
+}
+
+my $ver = &curr_ver;
+my $filever;
+
+while (sort glob "*.sql") {
+	($filever) = /(\d+\.\d+).*\.sql/; # two numbers and .sql suffix required
+	next unless $filever gt $ver; # skipping already migrated files
+	execute_migration($_);
+	&upgrade_ver($filever);
+	print "$filever migrated...\n";
+}
+print "Using version $filever\n";
+
+sub execute_migration {
+	my ($migname) = @_;
+	my $dbh = DBI->connect("dbi:mysql:dbname=${ ENV{SHOP_DB} };host=localhost",
+						   $ENV{SHOP_USER},
+						   $ENV{SHOP_PASSWORD},
+						   {AutoCommit => 1, RaiseError => 1,PrintError => 0});
+	my $sql = read_file($migname); # the whole script
+	# Split by ; to devide for statements
+	# FIXME doesn't work with subroutines!
+	my @sqls = split /;/, $sql; 
+	print "Executing... ";
+	foreach (@sqls) {
+		next unless /\S/;
+		$dbh->do( $_ );
+	}
+	print "Done...\n";
+}
+
+sub upgrade_ver {
+	my ($newver) = @_;
+	open( my $verfile, '>', VERSIONS )
+		or die $!;
+	print $verfile $newver;
+}
+
+sub curr_ver {
+	open( my $file, '<', VERSIONS )
+		or die $!;
+	return scalar <$file>;
+}

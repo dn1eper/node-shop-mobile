@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { Router, Scene } from 'react-native-router-flux';
+
 import { PersistGate } from 'redux-persist/integration/react'
 
 import Application from './client/containers/Application';
@@ -18,27 +18,17 @@ export default class App extends React.Component {
   render() {
     return (
       <Provider store={store}>
-        
-            <Application/>
-        
+         <Application/>
       </Provider>
     );
   }
 }
 
 /*
-<Provider store={store}>
-        <PersistGate loading={null} persistor={persistor}>
-          <Router>
-            <Application/>
-          </Router>
-        </PersistGate>
-      </Provider>
-
-
+<PersistGate loading={null} persistor={persistor}>
+</PersistGate>
 */
 
-// import styles
 /*const styles = StyleSheet.create({
   container: {
     flex: 1,

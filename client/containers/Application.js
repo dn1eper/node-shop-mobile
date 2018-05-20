@@ -13,18 +13,38 @@ import AdminPage from 'client/components/AdminPage';
 import AdminMenu from 'client/components/AdminMenu';
 import CartPage from 'client/containers/CartPage';
 */
+
 import SideMenu from 'react-native-side-menu';
-import { Router, Scene, Actions } from 'react-native-router-flux';
+import { Router, Stack, Scene, Actions, Reducer } from 'react-native-router-flux';
 
 import Menu from './Menu';
 import HomePage from '../components/HomePage';
 import AboutPage from '../components/AboutPage';
 
+const reducerCreate = params => {
+	const defaultReducer = new Reducer(params);
+	return (state, action) => {
+	  console.log('ACTION:', action);
+	  return defaultReducer(state, action);
+	};
+  };
+
 class Application extends React.Component {
 	render() {
 		return (
-			<SideMenu menu={<Menu />}>
-				<Text>WHY? WHY? WHY? WHY?</Text>
+			<SideMenu menu={<Menu />} >
+				<Router createReducer={reducerCreate}>
+					<Stack key="root">
+						<Scene key={HOME} component={HomePage} title="Home" initial/>
+						<Scene key={ABOUT} component={AboutPage} title="About"/>
+						<Scene key={CONTACT_US} component={AboutPage} title="Contact up"/>
+						<Scene key={LOGIN_URL} component={AboutPage} title="Login"/>
+						<Scene key={REGISTER_URL} component={AboutPage} title="Register"/>
+						<Scene key={LOGOUT_URL} component={AboutPage} title="Logout"/>
+						<Scene key={CART_URL} component={AboutPage} title="Cart"/>
+						<Scene key={ADMIN} component={AboutPage} />
+					</Stack>
+				</Router>
 			</SideMenu>
 		);
 	}
@@ -34,26 +54,7 @@ let Page = ({ param, sub }) => {
 	let menuComponent = (<Route path={`/${param}`} component={MainMenu} />);
 	if (param === 'admin') {
 		menuComponent = (<Route path={`/${ADMIN}`} component={AdminMenu} />);
-	}
 
-	return (
-		<div>
-		  {menuComponent}
-		  <div className="page">
-			<Route exact path={`/`} component={HomePage} />
-			<Route exact path={`/${HOME}`} component={HomePage} />
-			<Route exact path={`/${ABOUT}`} component={AboutPage} />
-			<Route exact path={`/${SEARCH}`} component={HomePage} />
-			<Route exact path={`/${CONTACT_US}`} component={AboutPage} />
-			<Route exact path={`/${LOGIN_URL}`} component={LoginPage} />
-			<Route exact path={`/${REGISTER_URL}`} component={RegisterPage} />
-			<Route exact path={`/${LOGOUT_URL}`} component={Logout} />
-			<Route exact path={`/${CART_URL}`} component={CartPage} />
-			<Route path={`/${ADMIN}`} component={AdminPage} />
-		  </div>
-		</div>
-	);
-};
 */
 
 export default connect()(Application);

@@ -1,26 +1,35 @@
 import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 import { connect } from 'react-redux';
-import { Route } from 'react-router-dom';
-import 'client/styles/Page.css';
 import { ADMIN, CONTACT_US, LOGIN_URL,
 		 REGISTER_URL, LOGOUT_URL, CART_URL,
-		 HOME, ABOUT, SEARCH } from 'client/Constants';
-import HomePage from 'client/components/HomePage';
-import AboutPage from 'client/components/AboutPage';
-import MainMenu from 'client/containers/MainMenu';
+		 HOME, ABOUT, SEARCH } from '../Constants';
+
+/*
 import LoginPage from 'client/components/LoginPage';
 import Logout from 'client/containers/Logout';
 import RegisterPage from 'client/components/RegisterPage';
 import AdminPage from 'client/components/AdminPage';
 import AdminMenu from 'client/components/AdminMenu';
 import CartPage from 'client/containers/CartPage';
+*/
+import SideMenu from 'react-native-side-menu';
+import { Router, Scene, Actions } from 'react-native-router-flux';
 
+import Menu from './Menu';
+import HomePage from '../components/HomePage';
+import AboutPage from '../components/AboutPage';
 
+class Application extends React.Component {
+	render() {
+		return (
+			<SideMenu menu={<Menu />}>
+				<Text>WHY? WHY? WHY? WHY?</Text>
+			</SideMenu>
+		);
+	}
+}
 /*
- * TODO We need to add some logic for SEARCH in the future
- * @param - first url word
- * @sub   - second url word
- */
 let Page = ({ param, sub }) => {
 	let menuComponent = (<Route path={`/${param}`} component={MainMenu} />);
 	if (param === 'admin') {
@@ -45,9 +54,6 @@ let Page = ({ param, sub }) => {
 		</div>
 	);
 };
+*/
 
-// The only and the one component Page in the application
-// That's why it is connected to itself
-Page = connect()(Page);
-
-export default Page;
+export default connect()(Application);

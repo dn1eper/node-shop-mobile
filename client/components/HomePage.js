@@ -1,12 +1,21 @@
 import React from 'react';
-import PostFilter from 'client/containers/PostFilter';
-import FilteredPostList from 'client/containers/FilteredPostList';
+import { StyleSheet, Text, View } from 'react-native';
+//import PostFilter from '../containers/PostFilter';
+//import FilteredPostList from '../containers/FilteredPostList';
 
-const HomePage = ({ match: { params } }) => (
+/*const HomePage = ({ match: { params } }) => (
 	<div>
-	<PostFilter filter={params.param} />
-	<FilteredPostList filter={params.param} />
+		<PostFilter filter={params.param} />
+		<FilteredPostList filter={params.param} />
 	</div>
-)
+)*/
+
+class HomePage extends React.Component {
+	render() {
+		return (
+			<Text>HOME PAGE   HOME PAGE   HOME PAGE</Text>
+		);
+	}
+}
 
 export default HomePage;

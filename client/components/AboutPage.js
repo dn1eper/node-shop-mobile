@@ -1,7 +1,8 @@
 import React from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 const AboutPage = () => (
-	<div>Nothing!</div>
+	<Text>Nothing!</Text>
 );
 
 export default AboutPage;

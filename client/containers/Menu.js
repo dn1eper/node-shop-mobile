@@ -13,6 +13,7 @@ import { Router, Stack, Scene, Actions } from 'react-native-router-flux';
 import { ADMIN, CONTACT_US, LOGIN_URL,
     REGISTER_URL, LOGOUT_URL, CART_URL,
     HOME, ABOUT, SEARCH } from '../Constants';
+import PropTypes from 'prop-types';
 import HomePage from '../components/HomePage';
 import AboutPage from '../components/AboutPage';
 
@@ -24,16 +25,17 @@ class Menu extends React.Component {
                 style={styles.menu}
             >
             {console.log(Actions)}
+            {console.log(this.props)}
                 <Button title="Home" 
-                    onPress={() => Actions.push(HOME)}/>
+                    onPress={() => { Actions.popTo(HOME); this.props.onItemSelected(); }}/>
                     
                 <Button
                     title="About"
-                    onPress={() => Actions.push(ABOUT)}/>
+                    onPress={() => {Actions.push(ABOUT); this.props.onItemSelected(); } }/>
                     
                 <Button
                     title="Contact us"
-                    onPress={() => Actions.push(ABOUT)}/>
+                    onPress={() => { Actions.push(ABOUT); this.props.onItemSelected(); } }/>
              </ScrollView>
         );
     }
@@ -52,6 +54,10 @@ const styles = StyleSheet.create({
 /*
     var lastMenuItem = props.isSigned ? LOGOUT_URL : LOGIN_URL;
 */
+
+Menu.propTypes = {
+    onItemSelected: PropTypes.func.isRequired,
+}
 
 export default connect(
     state => ({

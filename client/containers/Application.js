@@ -30,9 +30,20 @@ const reducerCreate = params => {
   };
 
 class Application extends React.Component {
+	constructor(props) {
+		super(props);
+		this.onMenuItemSelected = this.onMenuItemSelected.bind(this);
+		this.state = {
+		  isOpen: false,
+		};
+	}
+
 	render() {
 		return (
-			<SideMenu menu={<Menu />} >
+			<SideMenu 
+				menu={<Menu onItemSelected={this.onMenuItemSelected} />}
+				isOpen={this.state.isOpen}
+			>
 				<Router createReducer={reducerCreate}>
 					<Stack key="root">
 						<Scene key={HOME} component={HomePage} title="Home" initial/>
@@ -47,6 +58,10 @@ class Application extends React.Component {
 				</Router>
 			</SideMenu>
 		);
+	}
+
+	onMenuItemSelected() {
+		this.setState({ isOpen: false });
 	}
 }
 /*
